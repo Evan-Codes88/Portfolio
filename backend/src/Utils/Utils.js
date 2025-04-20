@@ -1,7 +1,7 @@
 import rateLimit from "express-rate-limit";
 
 
-// Rate Limiter - Stops people from attempting to log in over and over again
+// Rate Limiter - Protects against brute-force attacks
 export const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 Minutes
     max: 100, // Limit each IP to 100 requests per window
