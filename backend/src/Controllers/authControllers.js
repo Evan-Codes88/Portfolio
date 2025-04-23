@@ -75,4 +75,4 @@ export const verifyToken = (request, response, next) => {
         console.error("JWT verification failed:", error.message);
         response.status(401).json({ message: "Invalid token" });
     }
-  };
+};
