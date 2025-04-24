@@ -22,7 +22,7 @@ const Navbar = () => {
       <div className="w-full px-2">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex-shrink-0 ml-2">
+          <div className="flex-shrink-0 ml-8">
             <NavLink to="/" className="text-2xl font-bold text-pink-400">
               EM
             </NavLink>
