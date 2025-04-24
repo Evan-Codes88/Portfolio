@@ -19,14 +19,17 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-gray-800/80 backdrop-blur-sm z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-2">
         <div className="flex justify-between items-center h-16">
-          <div className="flex-shrink-0">
+          {/* Logo */}
+          <div className="flex-shrink-0 ml-2">
             <NavLink to="/" className="text-2xl font-bold text-pink-400">
               EM
             </NavLink>
           </div>
-          <div className="hidden md:flex space-x-4">
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex space-x-4 mr-2">
             {navLinks.map((link) => (
               <NavLink
                 key={link.to}
@@ -41,7 +44,9 @@ const Navbar = () => {
               </NavLink>
             ))}
           </div>
-          <div className="md:hidden">
+
+          {/* Mobile Hamburger */}
+          <div className="md:hidden mr-2">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-white focus:outline-none"
@@ -59,6 +64,8 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+
+      {/* Mobile Dropdown */}
       {isOpen && (
         <motion.div
           initial={{ opacity: 0, y: -10 }}

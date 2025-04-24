@@ -1,11 +1,15 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: "http://localhost:5000/api",
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8989/api';
+
+const axiosInstance = axios.create({
+  baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
-// Add JWT token to requests if available
-api.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -13,22 +17,20 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const getProjects = () => api.get("/projects");
-export const getProjectById = (id) => api.get(`/projects/${id}`);
-export const createProject = (data) => api.post("/projects", data);
-export const updateProject = (id, data) => api.put(`/projects/${id}`, data);
-export const deleteProject = (id) => api.delete(`/projects/${id}`);
+export const getProjects = () => axiosInstance.get("/projects");
+export const getProjectById = (id) => axiosInstance.get(`/projects/${id}`);
+export const createProject = (data) => axiosInstance.post("/projects", data);
+export const updateProject = (id, data) => axiosInstance.put(`/projects/${id}`, data);
+export const deleteProject = (id) => axiosInstance.delete(`/projects/${id}`);
 
-export const getArt = () => api.get("/art");
-export const getArtById = (id) => api.get(`/art/${id}`);
-export const createArt = (data) => api.post("/art", data);
-export const updateArt = (id, data) => api.put(`/art/${id}`, data);
-export const deleteArt = (id) => api.delete(`/art/${id}`);
+export const getArt = () => axiosInstance.get("/art");
+export const getArtById = (id) => axiosInstance.get(`/art/${id}`);
+export const createArt = (data) => axiosInstance.post("/art", data);
+export const updateArt = (id, data) => axiosInstance.put(`/art/${id}`, data);
+export const deleteArt = (id) => axiosInstance.delete(`/art/${id}`);
 
-export const createContact = (data) => api.post("/contact", data);
-export const getContacts = () => api.get("/contact");
-export const getContactById = (id) => api.get(`/contact/${id}`);
-export const updateContact = (id, data) => api.put(`/contact/${id}`, data);
-export const deleteContact = (id) => api.delete(`/contact/${id}`);
+export const getContacts = () => axiosInstance.get("/contact");
+export const createContact = (data) => axiosInstance.post("/contact", data);
+export const deleteContact = (id) => axiosInstance.delete(`/contact/${id}`);
 
-export const login = (data) => api.post("/auth/login", data);
+export const login = (data) => axiosInstance.post("/auth/login", data);
