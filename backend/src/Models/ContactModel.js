@@ -13,7 +13,7 @@ const contactSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    createdAt: { type: DataTransfer, default: Date.now },
+    createdAt: { type: Date, default: Date.now },
 });
 
 const Contact = mongoose.model("Contact", contactSchema);
