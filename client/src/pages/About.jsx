@@ -5,10 +5,11 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Link } from "react-router-dom";
 
-// Import placeholder images for the slider
+// Import placeholder images and resume PDF
 import cruellaSlider from "../assets/cruellaSlider.JPG";
 import undertaleSlider from "../assets/undertale.jpg";
 import popperzSlider from "../assets/popperz.png";
+import resume from "../assets/resume.pdf";
 
 const About = () => {
   const timeline = [
@@ -20,9 +21,9 @@ const About = () => {
   ];
 
   const funFacts = [
-    { text: "I have an amazing dog named Cruella", image: cruellaSlider },
-    { text: "My favorite game is Undertale", image: undertaleSlider },
-    { text: "I also work for Popperz Nightclub in my spare time", image: popperzSlider },
+    { text: "I have an amazing dog named Cruella", image: cruellaSlider, alt: "Evan's dog Cruella" },
+    { text: "My favorite game is Undertale", image: undertaleSlider, alt: "Undertale game artwork" },
+    { text: "I also work for Popperz Nightclub in my spare time", image: popperzSlider, alt: "Popperz Nightclub logo" },
   ];
 
   const sliderSettings = {
@@ -45,7 +46,7 @@ const About = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="text-2xl sm:text-3xl md:text-4xl font-bold text-pink-400 text-center mb-8 sm:mb-10 md:mb-12"
+          className="text-2xl sm:text-3xl md:text-4xl font-bold text-pink-400 text-center mb-8 sm:mb-10 md:mb-12 mt-5"
         >
           About Me
         </motion.h2>
@@ -70,38 +71,35 @@ const About = () => {
               My Journey
             </h3>
             <div className="relative pl-8 sm:pl-10">
-              {/* Timeline line with animation */}
+              {/* Timeline line with immediate animation */}
               <motion.div
                 className="absolute left-4 sm:left-6 top-0 w-1 bg-purple-400 h-full"
                 initial={{ scaleY: 0, transformOrigin: "top" }}
-                whileInView={{ scaleY: 1 }}
-                viewport={{ once: true, amount: 0.9 }}
+                animate={{ scaleY: 1 }}
                 transition={{ duration: 1.5, ease: "easeInOut" }}
               />
-              {timeline.map((item, index) => (
-                <div key={index} className="mb-4 sm:mb-6 md:mb-8 flex items-center">
-                  {/* Dot with scale animation */}
+              {timeline.map((item) => (
+                <div key={item.year} className="mb-4 sm:mb-6 md:mb-8 flex items-center">
+                  {/* Dot with immediate scale animation */}
                   <motion.div
                     className="w-6 h-6 sm:w-8 sm:h-8 bg-pink-400 rounded-full z-10 absolute left-1 sm:left-2"
                     initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, amount: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
                     transition={{
                       duration: 0.6,
                       ease: "easeInOut",
-                      delay: index * 0.2,
+                      delay: timeline.indexOf(item) * 0.2,
                     }}
                     whileHover={{ scale: 1.25 }}
                   />
-                  {/* Text with fade-in animation */}
+                  {/* Text with immediate fade-in animation */}
                   <motion.div
                     initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, amount: 0.9 }}
+                    animate={{ opacity: 1 }}
                     transition={{
                       duration: 0.6,
                       ease: "easeInOut",
-                      delay: index * 0.2 + 0.1,
+                      delay: timeline.indexOf(item) * 0.2 + 0.1,
                     }}
                     className="ml-8 sm:ml-10"
                   >
@@ -128,7 +126,7 @@ const About = () => {
                   <div key={index} className="p-2 sm:p-4 text-center">
                     <img
                       src={fact.image}
-                      alt={fact.text}
+                      alt={fact.alt}
                       className="w-full h-40 sm:h-48 md:h-56 object-cover rounded-lg mb-3 sm:mb-4"
                     />
                     <p className="text-gray-300 text-xs sm:text-sm md:text-base">
@@ -140,8 +138,11 @@ const About = () => {
             </div>
             {/* Resume Button at the Bottom with Extra Margin */}
             <a
-              href="/assets/resume.pdf"
-              download
+              href={resume}
+              target="_blank"
+              rel="noopener noreferrer"
+              role="button"
+              aria-label="View Evan Meehan's resume"
               className="mt-8 sm:mt-10 md:mt-12 inline-block bg-pink-400 text-gray-900 px-3 sm:px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm md:text-base hover:bg-pink-500 transition-colors duration-300"
             >
               View My Resume
@@ -160,10 +161,10 @@ const About = () => {
             My Journey to Web Development
           </motion.h3>
           <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">
-          My journey into tech began in 2022 when I started experimenting with HTML and CSS for fun, building small personal projects that sparked my curiosity. I was hooked by the ability to create interactive web pages from scratch, which led me to dive deeper into JavaScript and explore frameworks like React.js over the next year.
+            My journey into tech began in 2022 when I started experimenting with HTML and CSS for fun, building small personal projects that sparked my curiosity. I was hooked by the ability to create interactive web pages from scratch, which led me to dive deeper into JavaScript and explore frameworks like React.js over the next year.
           </p>
           <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">
-            In 2023, I briefly explored nursing but quickly realized my true passion lay in technology. I doubled down on self learning, and dabbled in game development with Godot. I created a 2D pixel platforming game called "My Life As A Coder", which landed me the Diversity Advocate Scholaship with Coder Academy. In 2024, I enrolled at Coder Academy to formalise my skills in full-stack web development, where I’ve been honing my craft to build clean, responsive, and user-focused applications.
+            In 2023, I briefly explored nursing but quickly realized my true passion lay in technology. I doubled down on self learning, and dabbled in game development with Godot. I created a 2D pixel platforming game called "My Life As A Coder", which landed me the Diversity Advocate Scholarship with Coder Academy. In 2024, I enrolled at Coder Academy to formalise my skills in full-stack web development, where I’ve been honing my craft to build clean, responsive, and user-focused applications.
           </p>
         </div>
 
@@ -178,7 +179,7 @@ const About = () => {
             What Sets Me Apart
           </motion.h3>
           <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">
-          I approach coding with a strong focus on problem solving, breaking down complex challenges into manageable pieces to find the best solutions. I prioritise writing accessible and inclusive code, ensuring that my work is usable by everyone, regardless of their background or abilities. I'm passionate about using my skills to support and uplift the LGBTQ+ community, constantly seeking opportunities to make a positive impact through technology.
+            I approach coding with a strong focus on problem solving, breaking down complex challenges into manageable pieces to find the best solutions. I prioritise writing accessible and inclusive code, ensuring that my work is usable by everyone, regardless of their background or abilities. I'm passionate about using my skills to support and uplift the LGBTQ+ community, constantly seeking opportunities to make a positive impact through technology.
           </p>
         </div>
 
@@ -192,8 +193,8 @@ const About = () => {
           >
             Let's Connect
           </motion.h3>
-          <p className="text-gray-300 mb War sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed text-center">
-          If you're looking for a web developer to help bring your ideas to life, feel free to reach out. I'm always open to new opportunities and collaborations, and I'd love to work together to create something great.
+          <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed text-center">
+            If you're looking for a web developer to help bring your ideas to life, feel free to reach out. I'm always open to new opportunities and collaborations, and I'd love to work together to create something great.
           </p>
           <div className="flex justify-center">
             <Link

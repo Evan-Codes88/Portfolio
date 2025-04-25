@@ -31,21 +31,21 @@ const Art = () => {
   const filteredArt = filter === "All" ? artPieces : artPieces.filter((a) => a.category === filter);
 
   return (
-    <section className="py-16 bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-8 sm:py-16 bg-gray-900">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.h2
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="text-4xl font-bold text-pink-400 text-center mb-12 mt-5"
+          className="text-3xl sm:text-4xl font-bold text-pink-400 text-center mb-8 sm:mb-12 mt-12"
         >
           Art Gallery
         </motion.h2>
-        <div className="flex justify-center gap-4 mb-8">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-4 mb-6 sm:mb-8">
           {filters.map((f) => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-4 py-2 rounded ${
+              className={`px-3 sm:px-4 py-1 sm:py-2 rounded text-sm sm:text-base ${
                 filter === f ? "bg-pink-400 text-gray-900" : "bg-gray-700 text-white"
               }`}
             >
@@ -53,7 +53,7 @@ const Art = () => {
             </button>
           ))}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {filteredArt.map((art) => (
             <ArtCard
               key={art._id}

@@ -117,14 +117,22 @@ const Skills = () => {
   };
 
   return (
-    <section className="py-16 bg-grey-900">
+    <section className="py-16 bg-gray-900">
       <motion.h2
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
-        className="text-4xl font-bold text-pink-400 text-center mb-12 mt-5"
+        className="text-4xl font-bold text-pink-400 text-center mb-4 mt-5"
       >
         Skills
       </motion.h2>
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="text-gray-300 text-base sm:text-lg text-center mb-12"
+      >
+        Click on each skill to know more
+      </motion.p>
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {Object.entries(skillsData).map(([category, skills], index) => (
