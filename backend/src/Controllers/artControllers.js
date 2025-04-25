@@ -38,28 +38,25 @@ export const getArtById = async (request, response) => {
   };
   
   // Create an art piece
-export const createArt = [
-    upload.single("image"),
-    async (request, response) => {
-        const { title, category, description } = request.body;
-        if (!title || !category || !request.file) {
-        return response.status(400).json({ message: "Title, category, and image are required" });
-        }
+  export const createArt = async (request, response) => {
+    const { title, category, description, imageUrl } = request.body;
+    if (!title || !category || !imageUrl) {
+        return response.status(400).json({ message: "Title, category, and imageUrl are required" });
+    }
 
-        const art = new Art({
+    const art = new Art({
         title,
         category,
-        imageUrl: `/uploads/${request.file.filename}`,
+        imageUrl, // Directly use the provided image URL
         description,
-        });
-        try {
+    });
+    try {
         const newArt = await art.save();
         response.status(201).json(newArt);
-        } catch (error) {
+    } catch (error) {
         response.status(400).json({ message: error.message });
-        }
-    },
-];
+    }
+};
 
 // Update an art piece
 export const updateArt = [

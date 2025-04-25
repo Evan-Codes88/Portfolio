@@ -3,9 +3,7 @@ import { motion } from "framer-motion";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-// Import the photo of your dog
-import doggo from "../assets/doggo.png";
+import { Link } from "react-router-dom";
 
 // Import placeholder images for the slider
 import cruellaSlider from "../assets/cruellaSlider.JPG";
@@ -15,16 +13,16 @@ import popperzSlider from "../assets/popperz.png";
 const About = () => {
   const timeline = [
     { year: "2019", event: "Graduated Highschool and moved to Queensland" },
-    { year: "2022", event: "Moved out of home" },
-    { year: "2023", event: "Worked as an attraction attendant at SeaWorld" },
-    { year: "2024", event: "Became a Full Stack Developer" },
-    { year: "2025", event: "Graduating as a Full Stack Developer" },
+    { year: "2022", event: "Started learning HTML and CSS for fun" },
+    { year: "2023", event: "Dived deeper into tech, focusing on JavaScript" },
+    { year: "2024", event: "Began Full-Stack Web Development at Coder Academy" },
+    { year: "2025", event: "Graduating as a Full-Stack Web Developer" },
   ];
 
   const funFacts = [
-    { text: "I have a goofy dog named Cruella 🐶", image: cruellaSlider },
-    { text: "My favorite game is Undertale 🖤", image: undertaleSlider },
-    { text: "I work at Popperz Nightclub on weekends 🎉", image: popperzSlider },
+    { text: "I have an amazing dog named Cruella", image: cruellaSlider },
+    { text: "My favorite game is Undertale", image: undertaleSlider },
+    { text: "I also work for Popperz Nightclub in my spare time", image: popperzSlider },
   ];
 
   const sliderSettings = {
@@ -51,6 +49,18 @@ const About = () => {
         >
           About Me
         </motion.h2>
+
+        {/* Introduction */}
+        <div className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg mb-8 sm:mb-12">
+          <motion.h3
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-3 sm:mb-4 md:mb-6 text-center"
+          >
+            Hi, I'm Evan! A passionate web developer based in Australia, with a love for solving problems through code. When I'm not coding, you can find me drawing pixel art, playing video games, or spending time with my partner Wilson and my dog Cruella.
+          </motion.h3>
+        </div>
 
         {/* Timeline and Fun Facts Section */}
         <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
@@ -139,48 +149,61 @@ const About = () => {
           </div>
         </div>
 
-        {/* More About Me Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg"
-        >
-          <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-3 sm:mb-4 md:mb-6 text-center">
-            A Little More About Me
-          </h3>
-          <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 items-center">
-            {/* Text Details */}
-            <div className="md:w-2/3">
-              <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">
-                I’m a passionate gamer at heart. Nothing beats a good gaming session to unwind! Some of my all-time favorite games include{" "}
-                <span className="text-pink-400 font-semibold">Undertale</span>{" "}
-                (the story and music are just unbeatable),{" "}
-                <span className="text-pink-400 font-semibold">Stardew Valley</span>{" "}
-                for those cozy farming vibes, and{" "}
-                <span className="text-pink-400 font-semibold">Hollow Knight</span>{" "}
-                for its challenging gameplay and stunning art.
-              </p>
-              <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">
-                I also love to draw, especially pixel art! Creating vibrant, retro-style pieces is one of my favorite ways to express my creativity. Whether I’m sketching characters or designing game-inspired art, I find so much joy in bringing my ideas to life on the canvas.
-              </p>
-              <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">
-                My weekends at Popperz Nightclub let me embrace my vibrant, outgoing side. I love the energy of the nightlife and connecting with my community in such a lively atmosphere. I’m also just as happy spending a cozy night in with my partner, a good game, or cuddling with my goofy dog, Cruella.
-              </p>
-            </div>
-            {/* Photo of Cruella */}
-            <div className="md:w-1/3 flex flex-col items-center">
-              <img
-                src={doggo}
-                alt="My dog Cruella"
-                className="w-40 sm:w-48 md:w-64 lg:w-full h-auto rounded-lg shadow-lg object-cover"
-              />
-              <p className="text-gray-400 text-center mt-2 sm:mt-3 text-xs sm:text-sm md:text-base">
-                Meet Cruella, my goofy best friend! 🐶
-              </p>
-            </div>
+        {/* Journey to Web Development */}
+        <div className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg mb-8 sm:mb-12">
+          <motion.h3
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-3 sm:mb-4 md:mb-6 text-center"
+          >
+            My Journey to Web Development
+          </motion.h3>
+          <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">
+          My journey into tech began in 2022 when I started experimenting with HTML and CSS for fun, building small personal projects that sparked my curiosity. I was hooked by the ability to create interactive web pages from scratch, which led me to dive deeper into JavaScript and explore frameworks like React.js over the next year.
+          </p>
+          <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">
+            In 2023, I briefly explored nursing but quickly realized my true passion lay in technology. I doubled down on self learning, and dabbled in game development with Godot. I created a 2D pixel platforming game called "My Life As A Coder", which landed me the Diversity Advocate Scholaship with Coder Academy. In 2024, I enrolled at Coder Academy to formalise my skills in full-stack web development, where I’ve been honing my craft to build clean, responsive, and user-focused applications.
+          </p>
+        </div>
+
+        {/* What Sets Me Apart */}
+        <div className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg mb-8 sm:mb-12">
+          <motion.h3
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-3 sm:mb-4 md:mb-6 text-center"
+          >
+            What Sets Me Apart
+          </motion.h3>
+          <p className="text-gray-300 mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed">
+          I approach coding with a strong focus on problem solving, breaking down complex challenges into manageable pieces to find the best solutions. I prioritise writing accessible and inclusive code, ensuring that my work is usable by everyone, regardless of their background or abilities. I'm passionate about using my skills to support and uplift the LGBTQ+ community, constantly seeking opportunities to make a positive impact through technology.
+          </p>
+        </div>
+
+        {/* Call to Action */}
+        <div className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg mb-8 sm:mb-12">
+          <motion.h3
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-3 sm:mb-4 md:mb-6 text-center"
+          >
+            Let's Connect
+          </motion.h3>
+          <p className="text-gray-300 mb War sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed text-center">
+          If you're looking for a web developer to help bring your ideas to life, feel free to reach out. I'm always open to new opportunities and collaborations, and I'd love to work together to create something great.
+          </p>
+          <div className="flex justify-center">
+            <Link
+              to="/contact"
+              className="inline-block bg-pink-400 text-gray-900 px-3 sm:px-4 py-2 rounded-lg font-semibold text-xs sm:text-sm md:text-base hover:bg-pink-500 transition-colors duration-300"
+            >
+              Contact Me
+            </Link>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Custom CSS for Slick Slider Dots */}

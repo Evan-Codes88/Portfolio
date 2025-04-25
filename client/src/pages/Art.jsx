@@ -36,7 +36,7 @@ const Art = () => {
         <motion.h2
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="text-4xl font-bold text-pink-400 text-center mb-12"
+          className="text-4xl font-bold text-pink-400 text-center mb-12 mt-5"
         >
           Art Gallery
         </motion.h2>

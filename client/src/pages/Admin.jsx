@@ -25,11 +25,9 @@ const Admin = () => {
   const [editingArt, setEditingArt] = useState(null);
   const navigate = useNavigate();
 
-  // Separate useForm instances for each form
   const projectForm = useForm();
   const artForm = useForm();
 
-  // Destructure methods for each form
   const {
     register: registerProject,
     handleSubmit: handleProjectSubmitForm,
@@ -59,7 +57,7 @@ const Admin = () => {
       .catch((error) => console.error("Error fetching art:", error.message, error.stack));
     getContacts()
       .then((res) => setContacts(res.data))
-      .catch((error) => console.error("Error fetching contacts:", error.message, error.stack));
+      .catch((error) => console.error("Error deleting contact:", error.message, error.stack));
   }, [navigate]);
 
   const handleProjectSubmit = async (data) => {
@@ -86,23 +84,24 @@ const Admin = () => {
   };
 
   const handleArtSubmit = async (data) => {
-    const formData = new FormData();
-    formData.append("title", data.title);
-    formData.append("category", data.category);
-    formData.append("description", data.description);
-    if (data.image[0]) formData.append("image", data.image[0]);
-
+    const artData = {
+      title: data.title,
+      category: data.category,
+      description: data.description,
+      imageUrl: data.imageUrl, 
+    };
+  
     try {
       if (editingArt) {
-        await updateArt(editingArt._id, formData);
+        await updateArt(editingArt._id, artData); 
         toast.success("Art updated!");
       } else {
-        await createArt(formData);
+        await createArt(artData); 
         toast.success("Art created!");
       }
       resetArt();
       setEditingArt(null);
-      getArt().then((res) => setArtPieces(res.data));
+      getArt().then((res) => setArtPieces(res.data)); 
     } catch (error) {
       console.error("Error saving art:", error.message, error.stack);
       toast.error("Error saving art: " + error.message);
@@ -117,7 +116,6 @@ const Admin = () => {
     setProjectValue("screenshots", project.screenshots.join(","));
     setProjectValue("liveUrl", project.liveUrl);
     setProjectValue("sourceUrl", project.sourceUrl);
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -126,7 +124,6 @@ const Admin = () => {
     setArtValue("title", art.title);
     setArtValue("category", art.category);
     setArtValue("description", art.description);
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -163,7 +160,12 @@ const Admin = () => {
     }
   };
 
-  // Animation variants for buttons
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    toast.success("Logged out successfully!");
+    navigate("/login");
+  };
+
   const buttonVariants = {
     hover: {
       scale: 1.1,
@@ -177,14 +179,25 @@ const Admin = () => {
   return (
     <section className="pt-24 pb-16 bg-gray-900">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-        <motion.h2
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-bold text-pink-400 text-center mb-12"
-        >
-          Admin Panel
-        </motion.h2>
+        <div className="w-full flex justify-between items-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="text-4xl font-bold text-pink-400"
+          >
+            Admin Panel
+          </motion.h2>
+          <motion.button
+            onClick={handleLogout}
+            className="bg-pink-400 text-gray-900 px-4 py-2 rounded hover:bg-pink-500"
+            variants={buttonVariants}
+            whileHover="hover"
+            whileTap="tap"
+          >
+            Logout
+          </motion.button>
+        </div>
 
         {/* Project Form */}
         <div className="mb-12 w-full flex justify-center">
@@ -277,8 +290,9 @@ const Admin = () => {
                 className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
               />
               <input
-                type="file"
-                {...registerArt("image", { required: !editingArt })}
+                type="url"
+                placeholder="Image URL"
+                {...registerArt("imageUrl", { required: !editingArt })}
                 className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
               />
               <div className="flex justify-center gap-2">
