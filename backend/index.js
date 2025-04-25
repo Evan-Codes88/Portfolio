@@ -3,7 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import connectDB from "./config/connectDB.js";
-import { limiter } from "./src/Utils/Utils.js";
+import { limiter } from "./src/utils/Utils.js";
 
 dotenv.config();
 
@@ -37,7 +37,7 @@ app.get("/api", (request, response) => {
 });
 
 // Global Error Handler
-import { globalErrorHandler } from "./src/Utils/Utils.js";
+import { globalErrorHandler } from "./src/utils/Utils.js";
 app.use(globalErrorHandler);
 
 
