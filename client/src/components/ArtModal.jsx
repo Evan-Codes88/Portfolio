@@ -11,8 +11,8 @@ const ArtModal = ({ isOpen, onRequestClose, art }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className="max-w-2xl mx-auto my-8 bg-gray-800 rounded-lg p-6 outline-none"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center"
+      className="w-full max-w-lg sm:max-w-xl md:max-w-3xl mx-auto my-8 bg-gray-800 rounded-lg p-4 sm:p-6 outline-none"
+      overlayClassName="fixed inset-0 backdrop-blur-md flex items-center justify-center"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -26,7 +26,14 @@ const ArtModal = ({ isOpen, onRequestClose, art }) => {
           className="w-full h-96 object-contain rounded mb-4"
         />
         <p className="text-gray-300 mb-4">{art.description || "No description provided."}</p>
-        <p className="text-gray-400 mb-4">Category: {art.category}</p>
+        
+        {/* Category as a tag */}
+        <div className="mb-4">
+          <span className="inline-block bg-pink-500 text-white text-sm font-semibold rounded-full px-4 py-2">
+            {art.category}
+          </span>
+        </div>
+
         <button
           onClick={onRequestClose}
           className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
