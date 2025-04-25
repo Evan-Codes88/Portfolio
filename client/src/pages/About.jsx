@@ -35,7 +35,7 @@ const About = () => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    arrows: false,
+    arrows: true,
     dotsClass: "slick-dots custom-dots",
   };
 
@@ -60,27 +60,49 @@ const About = () => {
               My Journey
             </h3>
             <div className="relative pl-8 sm:pl-10">
-              {/* Adjusted positioning for the timeline line to center on dots */}
-              <div className="absolute left-4 sm:left-6 top-0 w-1 bg-purple-400 h-full"></div>
+              {/* Timeline line with animation */}
+              <motion.div
+                className="absolute left-4 sm:left-6 top-0 w-1 bg-purple-400 h-full"
+                initial={{ scaleY: 0, transformOrigin: "top" }}
+                whileInView={{ scaleY: 1 }}
+                viewport={{ once: true, amount: 0.9 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+              />
               {timeline.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                  className="mb-4 sm:mb-6 md:mb-8 flex items-center"
-                >
-                  {/* Dot positioned to align with the line */}
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 bg-pink-400 rounded-full z-10 transition-transform duration-300 hover:scale-125 absolute left-1 sm:left-2"></div>
-                  <div className="ml-8 sm:ml-10">
+                <div key={index} className="mb-4 sm:mb-6 md:mb-8 flex items-center">
+                  {/* Dot with scale animation */}
+                  <motion.div
+                    className="w-6 h-6 sm:w-8 sm:h-8 bg-pink-400 rounded-full z-10 absolute left-1 sm:left-2"
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, amount: 0.9 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeInOut",
+                      delay: index * 0.2,
+                    }}
+                    whileHover={{ scale: 1.25 }}
+                  />
+                  {/* Text with fade-in animation */}
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, amount: 0.9 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeInOut",
+                      delay: index * 0.2 + 0.1,
+                    }}
+                    className="ml-8 sm:ml-10"
+                  >
                     <h4 className="text-sm sm:text-base md:text-lg font-semibold text-white">
                       {item.year}
                     </h4>
                     <p className="text-gray-400 text-xs sm:text-sm md:text-base">
                       {item.event}
                     </p>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </div>
               ))}
             </div>
           </div>

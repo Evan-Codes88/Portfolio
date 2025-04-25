@@ -24,7 +24,25 @@ const Admin = () => {
   const [editingProject, setEditingProject] = useState(null);
   const [editingArt, setEditingArt] = useState(null);
   const navigate = useNavigate();
-  const { register, handleSubmit, reset, setValue } = useForm();
+
+  // Separate useForm instances for each form
+  const projectForm = useForm();
+  const artForm = useForm();
+
+  // Destructure methods for each form
+  const {
+    register: registerProject,
+    handleSubmit: handleProjectSubmitForm,
+    reset: resetProject,
+    setValue: setProjectValue,
+  } = projectForm;
+
+  const {
+    register: registerArt,
+    handleSubmit: handleArtSubmitForm,
+    reset: resetArt,
+    setValue: setArtValue,
+  } = artForm;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -58,7 +76,7 @@ const Admin = () => {
         await createProject(projectData);
         toast.success("Project created!");
       }
-      reset();
+      resetProject();
       setEditingProject(null);
       getProjects().then((res) => setProjects(res.data));
     } catch (error) {
@@ -82,7 +100,7 @@ const Admin = () => {
         await createArt(formData);
         toast.success("Art created!");
       }
-      reset();
+      resetArt();
       setEditingArt(null);
       getArt().then((res) => setArtPieces(res.data));
     } catch (error) {
@@ -93,19 +111,23 @@ const Admin = () => {
 
   const handleEditProject = (project) => {
     setEditingProject(project);
-    setValue("title", project.title);
-    setValue("description", project.description);
-    setValue("tech", project.tech.join(","));
-    setValue("screenshots", project.screenshots.join(","));
-    setValue("liveUrl", project.liveUrl);
-    setValue("sourceUrl", project.sourceUrl);
+    setProjectValue("title", project.title);
+    setProjectValue("description", project.description);
+    setProjectValue("tech", project.tech.join(","));
+    setProjectValue("screenshots", project.screenshots.join(","));
+    setProjectValue("liveUrl", project.liveUrl);
+    setProjectValue("sourceUrl", project.sourceUrl);
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleEditArt = (art) => {
     setEditingArt(art);
-    setValue("title", art.title);
-    setValue("category", art.category);
-    setValue("description", art.description);
+    setArtValue("title", art.title);
+    setArtValue("category", art.category);
+    setArtValue("description", art.description);
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleDeleteProject = async (id) => {
@@ -141,9 +163,20 @@ const Admin = () => {
     }
   };
 
+  // Animation variants for buttons
+  const buttonVariants = {
+    hover: {
+      scale: 1.1,
+      transition: { duration: 0.3, yoyo: Infinity },
+    },
+    tap: {
+      scale: 0.95,
+    },
+  };
+
   return (
-    <section className="py-16 bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="pt-24 pb-16 bg-gray-900">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
         <motion.h2
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -154,184 +187,226 @@ const Admin = () => {
         </motion.h2>
 
         {/* Project Form */}
-        <div className="mb-12">
-          <h3 className="text-2xl font-semibold text-white mb-4">
-            {editingProject ? "Edit Project" : "Add Project"}
-          </h3>
-          <form onSubmit={handleSubmit(handleProjectSubmit)} className="space-y-4 max-w-md">
-            <input
-              type="text"
-              placeholder="Title"
-              {...register("title", { required: true })}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <textarea
-              placeholder="Description"
-              {...register("description", { required: true })}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <input
-              type="text"
-              placeholder="Tech (comma-separated)"
-              {...register("tech")}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <input
-              type="text"
-              placeholder="Screenshots (comma-separated URLs)"
-              {...register("screenshots")}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <input
-              type="url"
-              placeholder="Live URL"
-              {...register("liveUrl")}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <input
-              type="url"
-              placeholder="Source URL"
-              {...register("sourceUrl")}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <button
-              type="submit"
-              className="bg-pink-400 text-gray-900 p-3 rounded hover:bg-pink-500"
-            >
-              {editingProject ? "Update" : "Create"}
-            </button>
-            {editingProject && (
-              <button
-                type="button"
-                onClick={() => {
-                  setEditingProject(null);
-                  reset();
-                }}
-                className="ml-2 bg-gray-600 text-white p-3 rounded hover:bg-gray-700"
-              >
-                Cancel
-              </button>
-            )}
-          </form>
+        <div className="mb-12 w-full flex justify-center">
+          <div className="w-full max-w-md">
+            <h3 className="text-2xl font-semibold text-white mb-4 text-center">
+              {editingProject ? "Edit Project" : "Add Project"}
+            </h3>
+            <form onSubmit={handleProjectSubmitForm(handleProjectSubmit)} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Title"
+                {...registerProject("title", { required: true })}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <textarea
+                placeholder="Description"
+                {...registerProject("description", { required: true })}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <input
+                type="text"
+                placeholder="Tech (comma-separated)"
+                {...registerProject("tech")}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <input
+                type="text"
+                placeholder="Screenshots (comma-separated URLs)"
+                {...registerProject("screenshots")}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <input
+                type="url"
+                placeholder="Live URL"
+                {...registerProject("liveUrl")}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <input
+                type="url"
+                placeholder="Source URL"
+                {...registerProject("sourceUrl")}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <div className="flex justify-center gap-2">
+                <button
+                  type="submit"
+                  className="bg-pink-400 text-gray-900 p-3 rounded hover:bg-pink-500"
+                >
+                  {editingProject ? "Update" : "Create"}
+                </button>
+                {editingProject && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingProject(null);
+                      resetProject();
+                    }}
+                    className="bg-gray-600 text-white p-3 rounded hover:bg-gray-700"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
 
         {/* Art Form */}
-        <div className="mb-12">
-          <h3 className="text-2xl font-semibold text-white mb-4">
-            {editingArt ? "Edit Art" : "Add Art"}
-          </h3>
-          <form onSubmit={handleSubmit(handleArtSubmit)} className="space-y-4 max-w-md">
-            <input
-              type="text"
-              placeholder="Title"
-              {...register("title", { required: true })}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <input
-              type="text"
-              placeholder="Category"
-              {...register("category", { required: true })}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <textarea
-              placeholder="Description"
-              {...register("description")}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <input
-              type="file"
-              {...register("image", { required: !editingArt })}
-              className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
-            />
-            <button
-              type="submit"
-              className="bg-pink-400 text-gray-900 p-3 rounded hover:bg-pink-500"
-            >
-              {editingArt ? "Update" : "Create"}
-            </button>
-            {editingArt && (
-              <button
-                type="button"
-                onClick={() => {
-                  setEditingArt(null);
-                  reset();
-                }}
-                className="ml-2 bg-gray-600 text-white p-3 rounded hover:bg-gray-700"
-              >
-                Cancel
-              </button>
-            )}
-          </form>
+        <div className="mb-12 w-full flex justify-center">
+          <div className="w-full max-w-md">
+            <h3 className="text-2xl font-semibold text-white mb-4 text-center">
+              {editingArt ? "Edit Art" : "Add Art"}
+            </h3>
+            <form onSubmit={handleArtSubmitForm(handleArtSubmit)} className="space-y-4">
+              <input
+                type="text"
+                placeholder="Title"
+                {...registerArt("title", { required: true })}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <input
+                type="text"
+                placeholder="Category"
+                {...registerArt("category", { required: true })}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <textarea
+                placeholder="Description"
+                {...registerArt("description")}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <input
+                type="file"
+                {...registerArt("image", { required: !editingArt })}
+                className="w-full p-3 bg-gray-800 border border-purple-400 rounded text-white"
+              />
+              <div className="flex justify-center gap-2">
+                <button
+                  type="submit"
+                  className="bg-pink-400 text-gray-900 p-3 rounded hover:bg-pink-500"
+                >
+                  {editingArt ? "Update" : "Create"}
+                </button>
+                {editingArt && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingArt(null);
+                      resetArt();
+                    }}
+                    className="bg-gray-600 text-white p-3 rounded hover:bg-gray-700"
+                  >
+                    Cancel
+                  </button>
+                )}
+              </div>
+            </form>
+          </div>
         </div>
 
         {/* Projects List */}
-        <div className="mb-12">
-          <h3 className="text-2xl font-semibold text-white mb-4">Projects</h3>
-          <ul className="space-y-4">
-            {projects.map((project) => (
-              <li key={project._id} className="bg-gray-800 p-4 rounded flex justify-between items-center">
-                <span>{project.title}</span>
-                <div>
-                  <button
-                    onClick={() => handleEditProject(project)}
-                    className="bg-blue-400 text-white px-3 py-1 rounded mr-2"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteProject(project._id)}
-                    className="bg-red-400 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div className="mb-12 w-full flex justify-center">
+          <div className="w-full max-w-md">
+            <h3 className="text-2xl font-semibold text-white mb-4 text-center">Projects</h3>
+            <ul className="space-y-4">
+              {projects.map((project) => (
+                <li
+                  key={project._id}
+                  className="bg-gray-800 p-4 rounded flex justify-between items-center"
+                >
+                  <span>{project.title}</span>
+                  <div className="flex gap-2">
+                    <motion.button
+                      onClick={() => handleEditProject(project)}
+                      className="bg-blue-400 text-white px-3 py-1 rounded"
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                    >
+                      Edit
+                    </motion.button>
+                    <motion.button
+                      onClick={() => handleDeleteProject(project._id)}
+                      className="bg-red-400 text-white px-3 py-1 rounded"
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                    >
+                      Delete
+                    </motion.button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Art List */}
-        <div className="mb-12">
-          <h3 className="text-2xl font-semibold text-white mb-4">Art</h3>
-          <ul className="space-y-4">
-            {artPieces.map((art) => (
-              <li key={art._id} className="bg-gray-800 p-4 rounded flex justify-between items-center">
-                <span>{art.title}</span>
-                <div>
-                  <button
-                    onClick={() => handleEditArt(art)}
-                    className="bg-blue-400 text-white px-3 py-1 rounded mr-2"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDeleteArt(art._id)}
-                    className="bg-red-400 text-white px-3 py-1 rounded"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div className="mb-12 w-full flex justify-center">
+          <div className="w-full max-w-md">
+            <h3 className="text-2xl font-semibold text-white mb-4 text-center">Art</h3>
+            <ul className="space-y-4">
+              {artPieces.map((art) => (
+                <li
+                  key={art._id}
+                  className="bg-gray-800 p-4 rounded flex justify-between items-center"
+                >
+                  <span>{art.title}</span>
+                  <div className="flex gap-2">
+                    <motion.button
+                      onClick={() => handleEditArt(art)}
+                      className="bg-blue-400 text-white px-3 py-1 rounded"
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                    >
+                      Edit
+                    </motion.button>
+                    <motion.button
+                      onClick={() => handleDeleteArt(art._id)}
+                      className="bg-red-400 text-white px-3 py-1 rounded"
+                      variants={buttonVariants}
+                      whileHover="hover"
+                      whileTap="tap"
+                    >
+                      Delete
+                    </motion.button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         {/* Contacts List */}
-        <div>
-          <h3 className="text-2xl font-semibold text-white mb-4">Contact Submissions</h3>
-          <ul className="space-y-4">
-            {contacts.map((contact) => (
-              <li key={contact._id} className="bg-gray-800 p-4 rounded flex justify-between items-center">
-                <span>{contact.name} - {contact.email}</span>
-                <button
-                  onClick={() => handleDeleteContact(contact._id)}
-                  className="bg-red-400 text-white px-3 py-1 rounded"
+        <div className="w-full flex justify-center">
+          <div className="w-full max-w-md">
+            <h3 className="text-2xl font-semibold text-white mb-4 text-center">
+              Contact Submissions
+            </h3>
+            <ul className="space-y-4">
+              {contacts.map((contact) => (
+                <li
+                  key={contact._id}
+                  className="bg-gray-800 p-4 rounded flex justify-between items-center"
                 >
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
+                  <span>
+                    {contact.name} - {contact.email}
+                  </span>
+                  <motion.button
+                    onClick={() => handleDeleteContact(contact._id)}
+                    className="bg-red-400 text-white px-3 py-1 rounded"
+                    variants={buttonVariants}
+                    whileHover="hover"
+                    whileTap="tap"
+                  >
+                    Delete
+                  </motion.button>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
