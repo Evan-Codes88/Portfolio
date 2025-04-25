@@ -5,8 +5,8 @@ import {
     createAProject,
     updateProject,
     deleteProject
-} from "../Controllers/projectControllers.js";
-import { verifyToken } from "../Controllers/authControllers.js";
+} from "../controllers/projectControllers.js";
+import { verifyToken } from "../controllers/authControllers.js";
 
 const router = express.Router();
 

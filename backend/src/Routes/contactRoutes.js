@@ -5,7 +5,7 @@ import {
     createContact,
     updateContact,
     deleteContact,
-  } from "../Controllers/contactControllers.js";
+  } from "../controllers/contactControllers.js";
   import { verifyToken } from "../controllers/authControllers.js";
 
 const router = express.Router();

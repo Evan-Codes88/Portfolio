@@ -1,4 +1,4 @@
-import Art from "../Models/ArtModel.js";
+import Art from "../models/ArtModel.js";
 
 // Get all art pieces
 export const getAllArt = async (request, response) => {

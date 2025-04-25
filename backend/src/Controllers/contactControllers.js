@@ -1,4 +1,4 @@
-import Contact from "../Models/ContactModel.js";
+import Contact from "../models/ContactModel.js";
 import nodemailer from "nodemailer";
 
 // Get all contact submissions

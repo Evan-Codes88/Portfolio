@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 
@@ -19,10 +18,10 @@ app.use(limiter);
 connectDB();
 
 // Routes
-import projectRoutes from "./src/Routes/projectRoutes.js";
-import contactRoutes from "./src/Routes/contactRoutes.js";
-import artRoutes from "./src/Routes/artRoutes.js";
-import authRoutes from "./src/Routes/authRoutes.js";
+import projectRoutes from "./src/routes/projectRoutes.js";
+import contactRoutes from "./src/routes/contactRoutes.js";
+import artRoutes from "./src/routes/artRoutes.js";
+import authRoutes from "./src/routes/authRoutes.js";
 
 app.use("/api/projects", projectRoutes);
 app.use("/api/contact", contactRoutes);

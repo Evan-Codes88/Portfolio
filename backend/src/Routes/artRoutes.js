@@ -5,8 +5,8 @@ import {
     createArt,
     updateArt,
     deleteArt,
-} from "../Controllers/artControllers.js";
-import { verifyToken } from "../Controllers/authControllers.js";
+} from "../controllers/artControllers.js";
+import { verifyToken } from "../controllers/authControllers.js";
 
 const router = express.Router();
 
