@@ -35,7 +35,6 @@ export const createContact = async (request, response) => {
   try {
     const newContact = await contact.save();
 
-    // Send email notification
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
