@@ -319,7 +319,7 @@ const Admin = () => {
                   <div className="flex gap-2">
                     <motion.button
                       onClick={() => handleEditProject(project)}
-                      className="bg-blue-400 text-white px-3 py-1 rounded"
+                      className="bg-pink-400 text-black px-3 py-1 rounded"
                       variants={buttonVariants}
                       whileHover="hover"
                       whileTap="tap"

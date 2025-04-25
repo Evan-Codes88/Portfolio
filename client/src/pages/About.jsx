@@ -40,7 +40,7 @@ const About = () => {
   };
 
   return (
-    <section id="about" className="pt-16 sm:pt-20 md:pt-24 py-8 sm:py-12 md:py-16 bg-gray-800 text-gray-200">
+    <section id="about" className="pt-16 sm:pt-20 md:pt-24 py-8 sm:py-12 md:py-16 bg-gray-900 text-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <motion.h2
@@ -55,7 +55,7 @@ const About = () => {
         {/* Timeline and Fun Facts Section */}
         <div className="flex flex-col md:flex-row gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-12">
           {/* Timeline */}
-          <div className="md:w-1/2 bg-gray-900 rounded-lg p-4 sm:p-6 shadow-lg">
+          <div className="md:w-1/2 bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg">
             <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-3 sm:mb-4 md:mb-6">
               My Journey
             </h3>
@@ -108,7 +108,7 @@ const About = () => {
           </div>
 
           {/* Fun Facts Slider */}
-          <div className="md:w-1/2 bg-gray-900 rounded-lg p-4 sm:p-6 shadow-lg flex flex-col items-center">
+          <div className="md:w-1/2 bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg flex flex-col items-center">
             <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-3 sm:mb-4 md:mb-6">
               Fun Facts
             </h3>
@@ -144,7 +144,7 @@ const About = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="bg-gray-900 rounded-lg p-4 sm:p-6 shadow-lg"
+          className="bg-gray-800 rounded-lg p-4 sm:p-6 shadow-lg"
         >
           <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-white mb-3 sm:mb-4 md:mb-6 text-center">
             A Little More About Me
