@@ -8,11 +8,9 @@ const Loader = () => (
     animate={{ opacity: 1 }}
   >
     <div className="absolute top-1/4 left-1/3 transform -translate-x-1/4">
-      <div className="w-16 h-16 border-4 border-pink-400 border-t-transparent rounded-full animate-spin"></div>
+      <div className="w-16 h-16 border-4 border-pink-400 border-t-transparent rounded-full animate-spin ml-[15px]"></div>
     </div>
   </motion.div>
 );
 
 export default Loader;
-
-
