@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const Loader = () => (
   <motion.div
-    className="flex justify-center items-center h-96"
+    className="flex justify-center items-center min-h-screen"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
   >
@@ -12,3 +12,4 @@ const Loader = () => (
 );
 
 export default Loader;
+
